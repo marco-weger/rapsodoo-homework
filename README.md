@@ -6,4 +6,8 @@ Some considerations regarding the development:
   - The second and third indexes are region and province in order to maximize the performance of the aggregated SUM().
   - Finally, the sorting by region with the most cases will be done directly in the query (the sorting time for 20 records is negligible).
 - Since I have not thoroughly explored the procedures for updating the read data, I opted to execute 'INSERT' one by one using 'ON DUPLICATE KEY'. It is certainly more resource-intensive, but we can be 100% sure that the data is updated with each read.
-- 
+- Task #1: I decided to show the most recently updated data because I noticed that as of today, October 6th, the available data is from the 2nd, so nothing would have been displayed.
+- Task #2: 
+  - I opted to leave thr filter open (starting from the specified date) so that users can 'try' even if it hasn’t been published yet. Depending on the needs, other solutions might be more effective. For example: if I have a service that keeps the database updated, or if I am certain that the 'older' data is final and won’t change, I could lock all the dates without data and add a button to update recent ones.
+  - Following the same principle previously applied to the data source, I preferred to filter the array myself to optimize performance (see code comments). Further optimizations could be made by analyzing the selected date and the time passed from the first available date to now (e.g., if I am looking for recent data, it is pointless to evaluate the first part of the array).
+  - 

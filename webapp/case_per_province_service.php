@@ -13,7 +13,7 @@ if(isset($_GET['type']))
         require_once "Covid19.php";
         require_once "Case_per_province.php";
         Covid19::updateByDate($_GET['date']);
-        echo json_encode(Case_per_province::updateByDate($_GET['date']));
+        echo json_encode(Case_per_province::getByDateGroupedByRegion($_GET['date']));
     }
 }
 ?>

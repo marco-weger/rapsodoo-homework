@@ -1,4 +1,5 @@
 let go = true;
+let date = $("input[name='date']");
 let loader = $("#loader");
 let table = $('#table').DataTable({
     data: [],
@@ -29,31 +30,56 @@ $(document).ready(function(){
     $('.select2bs4').select2({
         theme: 'bootstrap4'
     });
-
-    $("#from").on('blur',function (){
-        let from = new Date($(this).val());
-        let to = new Date($("#to").val());
-        if(from > to){
-            $("#to").val($(this).val());
-        }
-        getData();
-    });
-
-    $("#to").on('blur',function (){
-        let to = new Date($(this).val());
-        let from = new Date($("#from").val());
-        if(from > to){
-            $("#from").val($(this).val());
-        }
-        getData();
-    });
     */
+    $("input[type='radio'][name='filterType']").on('change',function ()
+    {
+        let val = $(this).val();
+        if(val === 'latest')
+        {
+            getLatest();
+        }
+        else if(val === 'date')
+        {
+            getByDate();
+        }
+    });
 
-    getData();
+    date.on('blur change',function ()
+    {
+        if($("input[type='radio'][name='filterType']:checked").val() === 'date')
+        {
+            getByDate();
+        }
+    });
+
+    $("input[type='radio'][name='filterType'][value='latest']").prop('checked', true);
+    $("input[type='radio'][name='filterType']").trigger('change');
 });
 
-function getData(){
-    if(go){
+function getByDate()
+{
+    if(go)
+    {
+        go = false;
+        $('#table').hide();
+        loader.show();
+        $.ajax({
+            type: "GET",
+            url: "case_per_province_service.php",
+            data: "type=GetByDate&date=" + date.val(),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            cache: false,
+            success: showTable,
+            error: handleError
+        });
+    }
+}
+
+function getLatest()
+{
+    if(go)
+    {
         go = false;
         $('#table').hide();
         loader.show();
@@ -64,26 +90,33 @@ function getData(){
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             cache: false,
-            success: function (data) {
-                let rows = [];
-                $.each(data.values, function (region, totalCases) {
-                    rows.push({
-                        "Regione": region,
-                        "Casi totali": totalCases
-                    });
-                });
-
-                table.clear();
-                loader.hide();
-                table.rows.add(rows).draw();
-                $('#table').show();
-                go = true;
-            },
-            error: function (msg) {
-                console.log("ERROR: " +msg.responseText);
-                alert("ERROR: " +msg.responseText);
-                go = true;
-            }
+            success: showTable,
+            error: handleError
         });
     }
+}
+
+function showTable(data, textStatus, jqXHR)
+{
+    let rows = [];
+    $.each(data.values, function (region, totalCases)
+    {
+        rows.push({
+            "Regione": region,
+            "Casi totali": totalCases
+        });
+    });
+
+    table.clear();
+    loader.hide();
+    table.rows.add(rows).draw();
+    $('#table').show();
+    go = true;
+}
+
+function handleError(jqXHR, textStatus, errorThrown)
+{
+    console.log("ERROR: " + textStatus.responseText);
+    alert("ERROR: " + textStatus.responseText);
+    go = true;
 }
