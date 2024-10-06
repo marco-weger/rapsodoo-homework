@@ -8,7 +8,7 @@ let table = $('#table').DataTable({
         { data: 'Casi totali', title: 'Casi totali' }
     ],
     searching: false,
-    ordering: false,
+    ordering: true,
     info: false,
     scrollX: false,
     paging: false,
