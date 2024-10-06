@@ -1,5 +1,4 @@
 <?php
-
 class Covid19
 {
     const LINK_LATEST = "https://raw.githubusercontent.com/pcm-dpc/COVID-19/refs/heads/master/dati-json/dpc-covid19-ita-province-latest.json";

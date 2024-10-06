@@ -20,18 +20,6 @@ let table = $('#table').DataTable({
 });
 
 $(document).ready(function(){
-    /*
-    jQuery.support.cors = true;
-
-    //Initialize Select2 Elements
-    $('.select2').select2();
-
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-        theme: 'bootstrap4'
-    });
-    */
-
     $("button[name='excel']").on('click',function ()
     {
         if($("input[type='radio'][name='filterType']:checked").val() === 'latest' || date.val() !== null)

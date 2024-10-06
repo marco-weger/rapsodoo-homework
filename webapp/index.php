@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
     <?php
     $title = "Rapsodoo-Homework | COVID-19 per-province";
@@ -7,6 +7,7 @@
     ?>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
+
 <div class="wrapper">
     <?php require_once "menu.php"; ?>
     <!-- Content Wrapper. Contains page content -->
@@ -20,15 +21,14 @@
                             <a class="m-0 text-dark" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                             COVID-19 per-province
                         </h1>
-                    </div><!-- /.col -->
+                    </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <!-- <li class="breadcrumb-item"><a href="#">Home</a></li> -->
                             <li class="breadcrumb-item active">COVID-19 per-province</li>
                         </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+                    </div><
+                </div>
+            </div>
         </div>
         <!-- /.content-header -->
 
@@ -71,15 +71,14 @@
                         </div>
                     </div>
                 </div>
-            </div><!-- /.container-fluid -->
+
+            </div>
         </section>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
     <?php include "footer.php"; ?>
-    <!-- /.control-sidebar -->
 </div>
-<!-- ./wrapper -->
 
 <!-- JS -->
 <?php

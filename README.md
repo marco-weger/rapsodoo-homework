@@ -10,4 +10,3 @@ Some considerations regarding the development:
 - Task #2: 
   - I opted to leave thr filter open (starting from the specified date) so that users can 'try' even if it hasn’t been published yet. Depending on the needs, other solutions might be more effective. For example: if I have a service that keeps the database updated, or if I am certain that the 'older' data is final and won’t change, I could lock all the dates without data and add a button to update recent ones.
   - Following the same principle previously applied to the data source, I preferred to filter the array myself to optimize performance (see code comments). Further optimizations could be made by analyzing the selected date and the time passed from the first available date to now (e.g., if I am looking for recent data, it is pointless to evaluate the first part of the array).
-  - 

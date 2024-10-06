@@ -1,6 +1,4 @@
 <?php
-
-
 class DataBase
 {
     private $covid19;

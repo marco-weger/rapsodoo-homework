@@ -1,11 +1,8 @@
 <?php
-
-
 class Case_per_province
 {
     public $dateObject;
     public $values;
-
     function __construct($date, $values = [])
     {
         $dateObject = DateTime::createFromFormat('Y-m-d', $date);
@@ -17,7 +14,6 @@ class Case_per_province
         $this->dateObject = $dateObject;
         $this->values = $values;
     }
-
     public function __destruct()
     {
         $this->covid19 = null;
@@ -53,7 +49,6 @@ class Case_per_province
         }
         return new Case_per_province($timestamp, $values);
     }
-
     public static function getByDateGroupedByRegion($date): Case_per_province
     {
         require_once "DataBase.php";
