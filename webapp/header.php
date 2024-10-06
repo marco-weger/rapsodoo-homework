@@ -55,7 +55,8 @@
 <!--<link rel="stylesheet" href="plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">-->
 <!-- Toastr -->
 <!--<link rel="stylesheet" href="plugins/toastr/toastr.min.css">-->
-<!-- LOADER -->
-<!--<link rel="stylesheet" href="dist/css/loader.css">-->
+
+<!-- Loader -->
+<link rel="stylesheet" href="dist/css/loader.css">
 
 <title><?= $title ?></title>

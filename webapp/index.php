@@ -5,7 +5,6 @@
     $title = "Rapsodoo-Homework | COVID-19 per-province";
     require_once "header.php";
     ?>
-
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
 <div class="wrapper">
@@ -36,17 +35,21 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
+
+                <?php
+                    // TODO
+                    require_once "Covid19.php";
+                    Covid19::updateLatest();
+                    //'2024-10-02'
+                ?>
+
                 <div class="row tab">
                     <div class="col-12">
                         <table  id="table" class="table table-striped table-sm table-head-fixed table-bordered table-hover">
                         </table>
-
-                        <!-- TODO: user or not the loader? -->
-                        <!--
-                        <div id="WAIT">
+                        <div id="loader">
                             <div style="margin-top:100px;" class="loader"></div>
                         </div>
-                        -->
                     </div>
                 </div>
             </div><!-- /.container-fluid -->

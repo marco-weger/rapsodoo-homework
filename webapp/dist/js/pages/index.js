@@ -1,8 +1,22 @@
-//$("#ORD").hide();
-//$("#WAIT").hide();
-
-let table = '';
 let go = true;
+let loader = $("#loader");
+let table = $('#table').DataTable({
+    data: [],
+    columns: [
+        { data: 'Regione', title: 'Regione' },
+        { data: 'Casi totali', title: 'Casi totali' }
+    ],
+    searching: false,
+    ordering: false,
+    info: false,
+    scrollX: false,
+    paging: false,
+    lengthChange: false,
+    fixedHeader: true,
+    language: {
+        emptyTable: "Nessun dato disponibile per la data selezionata"
+    }
+});
 
 $(document).ready(function(){
     /*
@@ -34,106 +48,40 @@ $(document).ready(function(){
         getData();
     });
     */
+
+    getData();
 });
 
 function getData(){
     if(go){
         go = false;
-
-        try {
-            table.destroy();
-        } catch (error) {}
-
-        $('#table').empty();
-        $("#WAIT").show();
-
-        console.log("service.php?type=GetHistory&macchina=" + $("#macchina").val() + "&from=" + $("#from").val() + "&to=" + $("#to").val()
-    );
-
+        $('#table').hide();
+        loader.show();
         $.ajax({
             type: "GET",
-            url: "service.php",
-            data: "type=GetHistory&macchina=" + $("#macchina").val() + "&from=" + $("#from").val() + "&to=" + $("#to").val(),
+            url: "case_per_province_service.php",
+            data: "type=GetLatest",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             cache: false,
             success: function (data) {
-                $("#WAIT").hide();
-
-                let first = true;
-                let header = [];
                 let rows = [];
-                let row = [];
-                if(data.length > 0) {
-                    $.each(data, function (idx, elem) {
-                        row = [];
-                        $.each(elem, function (subIdx, subElem) {
-                            if (first) {
-                                header.push({"title": subIdx});
-                            }
-                            if (subElem != null) {
-                                if(subIdx === 'INIZIO PRODUZIONE'
-                                    || subIdx === 'FINE PRODUZIONE')
-                                {
-                                    let tmp = subElem.toString();
-                                    if(tmp.length > 19)
-                                    {
-                                        tmp = tmp.substring(0, 19);
-                                    }
-                                    row.push(tmp);
-                                }
-                                else
-                                {
-                                    row.push(subElem.toString());
-                                }
-                            } else {
-                                row.push('');
-                            }
-                        });
-                        if (first) {
-                            first = false;
-                        }
-                        rows.push(row);
+                $.each(data.values, function (region, totalCases) {
+                    rows.push({
+                        "Regione": region,
+                        "Casi totali": totalCases
                     });
+                });
 
-                    table = $('#table').DataTable({
-                        data: rows,
-                        columns: header,
-                        searching: false,
-                        ordering: false,
-                        info: false,
-                        scrollX: false,
-                        //scrollCollapse: true,
-                        paging: true,
-                        lengthChange: false,
-                        pageLength: 9,
-                        fixedHeader: false
-                    });
-                }
-                else {
-                    header.push({"title": " "});
-                    table = $('#table').DataTable({
-                        //data: ,
-                        columns: header,
-                        searching: false,
-                        ordering: false,
-                        info: false,
-                        scrollX: false,
-                        //scrollCollapse: true,
-                        paging: false,
-                        lengthChange: false,
-                        pageLength: 9,
-                        fixedHeader: false
-                    });
-                }
-
-                table.draw();
+                table.clear();
+                loader.hide();
+                table.rows.add(rows).draw();
+                $('#table').show();
                 go = true;
             },
             error: function (msg) {
                 console.log("ERROR: " +msg.responseText);
                 alert("ERROR: " +msg.responseText);
-                $("#WAIT").hide();
                 go = true;
             }
         });
