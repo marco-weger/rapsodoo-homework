@@ -31,6 +31,15 @@ $(document).ready(function(){
         theme: 'bootstrap4'
     });
     */
+
+    $("button[name='excel']").on('click',function ()
+    {
+        if($("input[type='radio'][name='filterType']:checked").val() === 'latest' || date.val() !== null)
+        {
+            $(this).closest('form').submit();
+        }
+    });
+
     $("input[type='radio'][name='filterType']").on('change',function ()
     {
         let val = $(this).val();
